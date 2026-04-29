@@ -10,7 +10,7 @@ Simply upload the frequency response measurement data (CSV) of your headphones t
 
 ### Repository Address
 
-Enter the following URL in **Headphone Calibration -> Headphone model -> Repo -> Import**:
+After processing is complete, enter the following URL in **Headphone Calibration -> Headphone model -> Repo -> Import**:
 <!-- URL_START -->
 ```
 https://raw.githubusercontent.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>/main/RepositoryFiles/
@@ -63,7 +63,7 @@ for example `Sony IER-Z1R.csv`, `Sennheiser IE 900.csv`.
 
 ### 仓库地址
 
-在 **耳机校准 -> 耳机型号 -> 仓库 -> 导入** 填入以下链接：
+Github 处理完成后，在 **耳机校准 -> 耳机型号 -> 仓库 -> 导入** 填入以下链接：
 <!-- URL_START -->
 ```
 https://raw.githubusercontent.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>/main/RepositoryFiles/
