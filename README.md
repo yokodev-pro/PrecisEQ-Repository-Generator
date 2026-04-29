@@ -41,7 +41,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 - **Chinese Localization**: If you want to add Chinese localization for brand and model names, add the Chinese name to the second item in the list in [RepositoryFiles/headphone_list.json](RepositoryFiles/headphone_list.json):
   ```json
   "brandName": ["Brand", "品牌名"],
-  "modelName": ["Model Name", "型号名"]
+  "modelName": ["Model", "型号名"]
   ```
 - **Subjective Volume Correction**: If there is a significant difference in subjective volume perception before and after calibrating a headphone, modifying the `noDspOffsetDb` field in [RepositoryFiles/headphone_list.json](RepositoryFiles/headphone_list.json) can increase/decrease the volume before calibration, in dB.
 
@@ -90,7 +90,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 - **中文本地化**：如果你想为品牌名、型号名添加中文本地化，在 [RepositoryFiles/headphone_list.json](RepositoryFiles/headphone_list.json) 把中文添加到列表第二项：
   ```json
   "brandName": ["Brand", "品牌名"],
-  "modelName": ["Model Name", "型号名"]
+  "modelName": ["Model", "型号名"]
   ```
 - **主观音量校正**：如果某个耳机校准前后的主观音量感受有明显差异，修改 [RepositoryFiles/headphone_list.json](RepositoryFiles/headphone_list.json) 中的 `noDspOffsetDb` 字段可以增大/减小校准前的音量，单位为dB。
 
