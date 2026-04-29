@@ -83,7 +83,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 
 #### 第三步：等待处理
 - 提交文件后，GitHub 会自动处理。你可以点击仓库顶部的 **Actions** 标签查看进度。
-- 处理完成后（通常需要几分钟），生成的 IR 会存放在 [RepositoryFiles](RepositoryFiles) 文件夹，PrecisEQ 将下载这些文件用于耳机校准；[images](images) 文件夹用于存放生成的频响曲线图，这些图片仅用于人工核查，PrecisEQ 不会下载这些图片。
+- 处理完成后（通常需要几分钟），生成的文件会存放在 [RepositoryFiles](RepositoryFiles) 文件夹，PrecisEQ 将下载这些文件用于耳机校准；[images](images) 文件夹用于存放生成的频响曲线图，这些图片仅用于人工核查，PrecisEQ 不会下载这些图片。
 - 重新启动 PrecisEQ 即可同步仓库内容。
 
 #### 可选步骤
