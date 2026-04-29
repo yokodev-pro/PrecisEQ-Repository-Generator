@@ -56,8 +56,11 @@ def update_readme_url():
     if readme_path.exists():
         content = readme_path.read_text(encoding='utf-8')
         # Replace the URL between <!-- URL_START --> and <!-- URL_END -->
-        pattern = r"(<!-- URL_START -->\n> `).*?(`\n> <!-- URL_END -->)"
-        new_content = re.sub(pattern, rf"\g<1>{url}\g<2>", content, flags=re.DOTALL)
+        def replace_url(match):
+            block_content = match.group(1)
+            return f"<!-- URL_START -->{re.sub(r'https://[^\s`\'\"]+', url, block_content)}<!-- URL_END -->"
+            
+        new_content = re.sub(r"<!-- URL_START -->(.*?)<!-- URL_END -->", replace_url, content, flags=re.DOTALL)
         readme_path.write_text(new_content, encoding='utf-8')
 
 def main():
