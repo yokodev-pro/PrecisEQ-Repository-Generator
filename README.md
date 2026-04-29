@@ -6,8 +6,6 @@
 
 <a id="english"></a>
 
-## English
-
 Simply upload the frequency response measurement data (CSV) of your headphones to automatically generate a dedicated online headphone calibration repository for PrecisEQ. Calibration files are generated using AutoEq.
 
 ### Repository Address
@@ -54,8 +52,6 @@ Simply upload the frequency response measurement data (CSV) of your headphones t
 ---
 
 <a id="中文"></a>
-
-## 中文
 
 只需要简单地上传耳机的频率响应测量数据（CSV），就能自动化生成 PrecisEQ 专用的在线耳机校准仓库。校准文件使用 AutoEq 生成。
 
