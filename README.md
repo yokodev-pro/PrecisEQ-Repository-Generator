@@ -6,7 +6,7 @@
 
 <a id="english"></a>
 
-Simply upload the frequency response measurement data (CSV) of headphones to automatically generate a dedicated online headphone calibration repository for PrecisEQ. Calibration files are generated using [AutoEq](https://github.com/jaakkopasanen/AutoEq).
+Simply upload the frequency response measurement data (CSV) of headphones to automatically generate a dedicated online headphone calibration repository for PrecisEQ. Calibration IRs are generated using [AutoEq](https://github.com/jaakkopasanen/AutoEq).
 
 ### Repository Address
 
@@ -55,7 +55,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 
 <a id="中文"></a>
 
-只需要简单地上传耳机的频率响应测量数据（CSV），就能自动化生成 PrecisEQ 专用的在线耳机校准仓库。校准文件使用 AutoEq 生成。
+只需要简单地上传耳机的频率响应测量数据（CSV），就能自动化生成 PrecisEQ 专用的在线耳机校准仓库。校准 IR 使用 AutoEq 生成。
 
 ### 仓库地址
 
