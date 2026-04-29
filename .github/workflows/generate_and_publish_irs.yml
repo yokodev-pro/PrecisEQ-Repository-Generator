@@ -1,0 +1,43 @@
+name: Generate and Publish IRs
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'measurements/**'
+      - 'scripts/**'
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install System Dependencies
+        run: sudo apt-get update && sudo apt-get install -y libsndfile1
+
+      - name: Install Python Dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run AutoEq Batch Processing
+        run: python scripts/batch_generate_irs.py
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-generate IRs and update metadata"
+          file_pattern: 'RepositoryFiles/* images/* sync_state.json README.md'
