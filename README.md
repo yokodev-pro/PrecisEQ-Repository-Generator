@@ -10,7 +10,7 @@ Simply upload the frequency response measurement data (CSV) of your headphones t
 
 ### Repository Address
 
-After processing is complete, enter the following URL in **Headphone Calibration -> Headphone model -> Repo -> Import**:
+After you upload the CSV files for the first time and successfully generate the headphone calibration files, the following URL will be automatically replaced with your own repository address. Enter it in **Headphone Calibration -> Headphone model -> Repo -> Import**:
 <!-- URL_START -->
 ```
 https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main/RepositoryFiles/
@@ -63,7 +63,7 @@ for example `Sony IER-Z1R.csv`, `Sennheiser IE 900.csv`.
 
 ### 仓库地址
 
-Github 处理完成后，在 **耳机校准 -> 耳机型号 -> 仓库 -> 导入** 填入以下链接：
+首次上传 CSV 文件并成功生成耳机校准文件后，以下链接会自动替换为你的仓库地址。在 **耳机校准 -> 耳机型号 -> 仓库 -> 导入** 填入：
 <!-- URL_START -->
 ```
 https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main/RepositoryFiles/
@@ -72,7 +72,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 
 ### 如何使用
 
-#### 第一步：Fork 并自订仓库信息
+#### 第一步：获取和自订仓库信息
 1. 点击右上角的 **Use this template** 创建一个你自己的 **公开（Public）** 仓库。
 2. 修改 [RepositoryFiles/repo_info.json](RepositoryFiles/repo_info.json) 中的仓库信息。
 
