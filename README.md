@@ -34,7 +34,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 
 #### Step 3: Wait for processing
 - After submitting the files, GitHub will process them automatically. You can click the **Actions** tab at the top of the repository to check progress.
-- After processing is complete (usually takes a few minutes), the generated IRs will be stored in the [RepositoryFiles](RepositoryFiles) folder, which PrecisEQ will download for headphone calibration. The [images](images) folder will be used to store the generated frequency response graphs; these images are for manual inspection only and PrecisEQ will not download them.
+- After processing is complete (usually takes a few minutes), the generated files will be stored in the [RepositoryFiles](RepositoryFiles) folder, which PrecisEQ will download for headphone calibration. The [images](images) folder will be used to store the generated frequency response graphs; these images are for manual inspection only and PrecisEQ will not download them.
 - Restart PrecisEQ to sync the repository content.
 
 #### Optional Steps
