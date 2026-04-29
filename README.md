@@ -38,7 +38,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 - Restart PrecisEQ to sync the repository content.
 
 #### Optional Steps
-- **Target Curve Compensation**: If the ear simulator used as the data source has measurement results that differ significantly from the B&K 4195 (In-Ear) or the GRAS RA0045+KB0065/66 (Over-Ear), it is recommended to replace [targets/zero.csv/](targets/zero.csv/) with a compensation curve from the data source's ear simulator to the aforementioned ones. This ensures compatibility with the user's saved target curves. You can obtain the compensation curve by measuring a headphone with highly consistent performance (such as the Etymotic ER4SR), getting its frequency response curve under the official repository's Flat Target preset, and then inverting the curve.
+- **Target Curve Compensation**: If the ear simulator used as the data source has measurement results that differ significantly from the B&K 4195 (In-Ear) or the GRAS RA0045+KB0065/66 (Over-Ear), it is recommended to replace [targets/zero.csv/](targets/zero.csv/) with a compensation curve from the data source's ear simulator to the aforementioned ones. This ensures compatibility with the user's saved target curves. You can obtain the compensation curve by measuring a headphone with highly consistent performance (such as the Etymotic ER4SR、Apple AirPods Max), getting its frequency response curve under the official repository's Flat Target preset, and then inverting the curve.
 - **Chinese Localization**: If you want to add Chinese localization for brand and model names, add the Chinese name to the second item in the list in [RepositoryFiles/headphone_list.json](RepositoryFiles/headphone_list.json):
   ```json
   "brandName": ["Brand", "品牌名"],
@@ -88,7 +88,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 - 重新启动 PrecisEQ 即可同步仓库内容。
 
 #### 可选步骤
-- **目标曲线补偿**：如果作为数据来源的人工耳，其测量结果与 B&K 4195（入耳式）和 GRAS RA0045+KB0065/66（头戴式）有较大出入，建议将 [targets/zero.csv/](targets/zero.csv/) 替换为数据源的人工耳到上述人工耳的补偿曲线，以兼容用户已经保存的目标曲线。可通过测量一致性较好的耳机（例如音特美 ER4SR）在官方仓库预设的 Flat Target 下的频响曲线，取反后得到补偿曲线。
+- **目标曲线补偿**：如果作为数据来源的人工耳，其测量结果与 B&K 4195（入耳式）和 GRAS RA0045+KB0065/66（头戴式）有较大出入，建议将 [targets/zero.csv/](targets/zero.csv/) 替换为数据源的人工耳到上述人工耳的补偿曲线，以兼容用户已经保存的目标曲线。可通过测量一致性较好的耳机（例如Etymotic ER4SR、Apple AirPods Max）在官方仓库预设的 Flat Target 下的频响曲线，取反后得到补偿曲线。
 - **中文本地化**：如果你想为品牌名、型号名添加中文本地化，在 [RepositoryFiles/headphone_list.json](RepositoryFiles/headphone_list.json) 把中文添加到列表第二项：
   ```json
   "brandName": ["Brand", "品牌名"],
