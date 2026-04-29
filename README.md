@@ -24,11 +24,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 2. Modify the repository information in [RepositoryFiles/repo_info.json](RepositoryFiles/repo_info.json).
 
 #### Step 2: Upload measurement data
-1. Collect your headphone frequency response measurement files (`.csv` format), and name them according to the rule: 
-```
-Brand Model.csv
-```
-for example `Sony IER-Z1R.csv`, `Sennheiser IE 900.csv`.
+1. Collect your headphone frequency response measurement files (`.csv` format), and name them according to the rule: `Brand Model.csv`, for example `Sony IER-Z1R.csv`, `Sennheiser IE 900.csv`.
 2. Enter the corresponding folder in the repository based on the headphone type:
    - In-Ear: [measurements/0_in-ear/](measurements/0_in-ear/)
    - Over-Ear (Open-Back): [measurements/1_open-back/](measurements/1_open-back/)
@@ -77,9 +73,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 2. 修改 [RepositoryFiles/repo_info.json](RepositoryFiles/repo_info.json) 中的仓库信息。
 
 #### 第二步：上传测量数据
-1. 收集你的耳机频响测量文件（`.csv` 格式），并按以下规则命名：
-```品牌 型号.csv```
-例如`Sony IER-Z1R.csv`、`Sennheiser IE 900.csv`。
+1. 收集你的耳机频响测量文件（`.csv` 格式），并按以下规则命名：`品牌 型号.csv`，例如 `Sony IER-Z1R.csv`、`Sennheiser IE 900.csv`。
 2. 根据耳机的类型，进入仓库里的对应文件夹：
    - 入耳式：[measurements/0_in-ear/](measurements/0_in-ear/)
    - 头戴式（开放）：[measurements/1_open-back/](measurements/1_open-back/)
