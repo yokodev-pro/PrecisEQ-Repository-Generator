@@ -10,10 +10,10 @@ Simply upload the frequency response measurement data (CSV) of your headphones t
 
 ### Repository Address
 
-> Enter the following URL in **Headphone Calibration -> Headphone Model -> Repository -> Import**:
-> <!-- URL_START -->
-> `https://raw.githubusercontent.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>/main/RepositoryFiles/`
-> <!-- URL_END -->
+Enter the following URL in **Headphone Calibration -> Headphone model -> Repo -> Import**:
+<!-- URL_START -->
+`https://raw.githubusercontent.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>/main/RepositoryFiles/`
+<!-- URL_END -->
 
 ### How to Use
 
@@ -57,10 +57,10 @@ Simply upload the frequency response measurement data (CSV) of your headphones t
 
 ### 仓库地址
 
-> 在 **耳机校准 -> 耳机型号 -> 仓库 -> 导入** 填入以下链接：
-> <!-- URL_START -->
-> `https://raw.githubusercontent.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>/main/RepositoryFiles/`
-> <!-- URL_END -->
+在 **耳机校准 -> 耳机型号 -> 仓库 -> 导入** 填入以下链接：
+<!-- URL_START -->
+`https://raw.githubusercontent.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>/main/RepositoryFiles/`
+<!-- URL_END -->
 
 ### 如何使用
 
