@@ -19,7 +19,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 
 ### How to Use
 
-#### Step 1: Fork and customize repository info
+#### Step 1: Fork and customize repository
 1. Click **Use this template** at the top right to create your own **Public** repository.
 2. Modify the repository information in [RepositoryFiles/repo_info.json](RepositoryFiles/repo_info.json).
 
@@ -68,7 +68,7 @@ https://raw.githubusercontent.com/yokodev-pro/PrecisEQ-Repository-Generator/main
 
 ### 如何使用
 
-#### 第一步：获取和自订仓库信息
+#### 第一步：获取和自订仓库
 1. 点击右上角的 **Use this template** 创建一个你自己的 **公开（Public）** 仓库。
 2. 修改 [RepositoryFiles/repo_info.json](RepositoryFiles/repo_info.json) 中的仓库信息。
 
