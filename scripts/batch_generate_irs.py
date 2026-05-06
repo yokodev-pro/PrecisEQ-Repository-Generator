@@ -189,7 +189,8 @@ def main():
                 "--convolution-eq",
                 "--phase", "minimum",
                 "--bit-depth", "32",
-                "--preamp", "-11.8"
+                "--preamp", "-11.8",
+                "--plot"
             ]
         
             try:
