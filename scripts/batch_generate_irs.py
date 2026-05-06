@@ -145,85 +145,107 @@ def main():
 
     if to_process:
         print(f"Found {len(to_process)} headphones to process.")
-        temp_in = base_dir / "temp_in"
-        temp_out = base_dir / "temp_out"
-        temp_in.mkdir(parents=True, exist_ok=True)
-        temp_out.mkdir(parents=True, exist_ok=True)
         
-        for hp_id in to_process:
-            csv_path = current_scan[hp_id]["csv_path"]
-            shutil.copy2(csv_path, temp_in / csv_path.name)
-            
-            # Prepare space by deleting old wav files for this hp_id
-            for old_wav in repo_files_dir.glob(f"{hp_id}_*.wav"):
-                old_wav.unlink()
-            
-        cmd = [
-            sys.executable, "-m", "autoeq",
-            "--input-dir", str(temp_in),
-            "--output-dir", str(temp_out),
-            "--target", "targets/zero.csv",
-            "--fs", "44100,48000,96000,192000",
-            "--convolution-eq",
-            "--phase", "minimum",
-            "--bit-depth", "32",
-            "--preamp", "-11.8"
-        ]
+        # 建立类型到目标文件的映射关系
+        type_targets = {
+            0: base_dir / "targets" / "0_zero.csv",
+            1: base_dir / "targets" / "1_zero.csv",
+            2: base_dir / "targets" / "2_zero.csv"
+        }
         
-        try:
-            print("Running AutoEq...")
-            subprocess.run(cmd, check=True)
-        except subprocess.CalledProcessError as e:
-            print(f"AutoEq warning/error: {e}")
-            # Even if there is an error, some might have been generated, we proceed to harvest
-            
-        # Process AutoEq output
-        wav_files = list(temp_out.rglob("*.wav"))
-        for wav_file in wav_files:
-            filename = wav_file.name
-            match = re.search(r'^(.*?) minimum phase (\d+)Hz\.wav$', filename)
-            if not match:
-                continue
-                
-            orig_name_out = match.group(1).strip()
-            fs_str = match.group(2)
-            
-            fs_map = {'44100': '44', '48000': '48', '96000': '96', '192000': '192'}
-            mapped_fs = fs_map.get(fs_str)
-            if not mapped_fs:
-                continue
-                
-            out_hp_id = sanitize_id(orig_name_out)
-            if out_hp_id not in to_process:
-                continue
-                
-            version = current_scan[out_hp_id]["version"]
-            new_wav_name = f"{out_hp_id}_{version}_{mapped_fs}.wav"
-            
-            dest_wav_path = repo_files_dir / new_wav_name
-            shutil.copy2(wav_file, dest_wav_path)
-            
-        # Move images and update sync_state
+        # 按类型对耳机进行分组
+        by_type = {}
         for hp_id in to_process:
-            orig_name = current_scan[hp_id]["original_name"]
-            img_file = temp_out / orig_name / f"{orig_name}.png"
-            if not img_file.exists():
-                img_file = temp_out / f"{orig_name}.png"
+            t = current_scan[hp_id]["type"]
+            if t not in by_type:
+                by_type[t] = []
+            by_type[t].append(hp_id)
             
-            if img_file.exists():
-                dest_img_path = images_dir / f"{hp_id}.png"
-                shutil.copy2(img_file, dest_img_path)
+        for hp_type, ids in by_type.items():
+            print(f"Processing type {hp_type} with {len(ids)} headphones...")
+            temp_in = base_dir / "temp_in"
+            temp_out = base_dir / "temp_out"
+            temp_in.mkdir(parents=True, exist_ok=True)
+            temp_out.mkdir(parents=True, exist_ok=True)
+            
+            target_path = type_targets.get(hp_type, base_dir / "targets")
+            
+            for hp_id in ids:
+                csv_path = current_scan[hp_id]["csv_path"]
+                # 保留子目录名称
+                (temp_in / csv_path.parent.name).mkdir(parents=True, exist_ok=True)
+                shutil.copy2(csv_path, temp_in / csv_path.parent.name / csv_path.name)
                 
-            sync_state[hp_id] = {
-                "hash": current_scan[hp_id]["hash"],
-                "version": current_scan[hp_id]["version"],
-                "type": current_scan[hp_id]["type"],
-                "original_name": current_scan[hp_id]["original_name"]
-            }
-            
-        # Cleanup
-        shutil.rmtree(temp_in, ignore_errors=True)
-        shutil.rmtree(temp_out, ignore_errors=True)
+                # 预留空间：删除该 hp_id 的旧 wav 文件
+                for old_wav in repo_files_dir.glob(f"{hp_id}_*.wav"):
+                    old_wav.unlink()
+                
+            cmd = [
+                sys.executable, "-m", "autoeq",
+                "--input-dir", str(temp_in),
+                "--output-dir", str(temp_out),
+                "--target", str(target_path),
+                "--fs", "44100,48000,96000,192000",
+                "--convolution-eq",
+                "--phase", "minimum",
+                "--bit-depth", "32",
+                "--preamp", "-11.8"
+            ]
+        
+            try:
+                print("Running AutoEq...")
+                subprocess.run(cmd, check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"AutoEq warning/error: {e}")
+                # Even if there is an error, some might have been generated, we proceed to harvest
+                
+            # Process AutoEq output
+            wav_files = list(temp_out.rglob("*.wav"))
+            for wav_file in wav_files:
+                filename = wav_file.name
+                match = re.search(r'^(.*?) minimum phase (\d+)Hz\.wav$', filename)
+                if not match:
+                    continue
+                    
+                orig_name_out = match.group(1).strip()
+                fs_str = match.group(2)
+                
+                fs_map = {'44100': '44', '48000': '48', '96000': '96', '192000': '192'}
+                mapped_fs = fs_map.get(fs_str)
+                if not mapped_fs:
+                    continue
+                    
+                out_hp_id = sanitize_id(orig_name_out)
+                if out_hp_id not in ids:
+                    continue
+                    
+                version = current_scan[out_hp_id]["version"]
+                new_wav_name = f"{out_hp_id}_{version}_{mapped_fs}.wav"
+                
+                dest_wav_path = repo_files_dir / new_wav_name
+                shutil.copy2(wav_file, dest_wav_path)
+                
+            # 移动图片并更新 sync_state
+            for hp_id in ids:
+                orig_name = current_scan[hp_id]["original_name"]
+                img_file = temp_out / orig_name / f"{orig_name}.png"
+                if not img_file.exists():
+                    img_file = temp_out / f"{orig_name}.png"
+                
+                if img_file.exists():
+                    dest_img_path = images_dir / f"{hp_id}.png"
+                    shutil.copy2(img_file, dest_img_path)
+                    
+                sync_state[hp_id] = {
+                    "hash": current_scan[hp_id]["hash"],
+                    "version": current_scan[hp_id]["version"],
+                    "type": current_scan[hp_id]["type"],
+                    "original_name": current_scan[hp_id]["original_name"]
+                }
+                
+            # Cleanup
+            shutil.rmtree(temp_in, ignore_errors=True)
+            shutil.rmtree(temp_out, ignore_errors=True)
 
     # Rebuild headphone_list.json
     headphone_list = []
