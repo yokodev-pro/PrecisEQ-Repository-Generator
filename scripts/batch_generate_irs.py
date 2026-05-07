@@ -65,7 +65,8 @@ def update_readme_url():
         readme_path.write_text(new_content, encoding='utf-8')
 
 def main():
-    base_dir = Path(".").resolve()
+    # 改为基于当前脚本所在位置寻找项目根目录，避免因为执行时的路径不同导致找错文件夹
+    base_dir = Path(__file__).resolve().parent.parent
     measurements_dir = base_dir / "measurements"
     repo_files_dir = base_dir / "RepositoryFiles"
     images_dir = base_dir / "images"
@@ -146,14 +147,12 @@ def main():
     if to_process:
         print(f"Found {len(to_process)} headphones to process.")
         
-        # 建立类型到目标文件的映射关系
         type_targets = {
             0: base_dir / "targets" / "0_zero.csv",
             1: base_dir / "targets" / "1_zero.csv",
             2: base_dir / "targets" / "2_zero.csv"
         }
         
-        # 按类型对耳机进行分组
         by_type = {}
         for hp_id in to_process:
             t = current_scan[hp_id]["type"]
@@ -172,11 +171,9 @@ def main():
             
             for hp_id in ids:
                 csv_path = current_scan[hp_id]["csv_path"]
-                # 保留子目录名称
                 (temp_in / csv_path.parent.name).mkdir(parents=True, exist_ok=True)
                 shutil.copy2(csv_path, temp_in / csv_path.parent.name / csv_path.name)
                 
-                # 预留空间：删除该 hp_id 的旧 wav 文件
                 for old_wav in repo_files_dir.glob(f"{hp_id}_*.wav"):
                     old_wav.unlink()
                 
@@ -189,8 +186,7 @@ def main():
                 "--convolution-eq",
                 "--phase", "minimum",
                 "--bit-depth", "32",
-                "--preamp", "-11.8",
-                "--plot"
+                "--preamp", "-11.8"
             ]
         
             try:
@@ -201,10 +197,11 @@ def main():
                 # Even if there is an error, some might have been generated, we proceed to harvest
                 
             # Process AutoEq output
+            successful_hp_ids = set()
             wav_files = list(temp_out.rglob("*.wav"))
             for wav_file in wav_files:
                 filename = wav_file.name
-                match = re.search(r'^(.*?) minimum phase (\d+)Hz\.wav$', filename)
+                match = re.search(r'^(.*?)\s+minimum\s+phase\s+(\d+)\s*Hz\.wav$', filename, re.IGNORECASE)
                 if not match:
                     continue
                     
@@ -220,16 +217,27 @@ def main():
                 if out_hp_id not in ids:
                     continue
                     
+                successful_hp_ids.add(out_hp_id)
                 version = current_scan[out_hp_id]["version"]
                 new_wav_name = f"{out_hp_id}_{version}_{mapped_fs}.wav"
                 
                 dest_wav_path = repo_files_dir / new_wav_name
                 shutil.copy2(wav_file, dest_wav_path)
                 
-            # 移动图片并更新 sync_state
             for hp_id in ids:
+                if hp_id not in successful_hp_ids:
+                    print(f"Warning: Failed to generate or copy files for {hp_id}. Skipping state update.")
+                    continue
+                    
                 orig_name = current_scan[hp_id]["original_name"]
-                img_file = temp_out / orig_name / f"{orig_name}.png"
+                parent_dir_name = current_scan[hp_id]["csv_path"].parent.name
+                
+                # 兼容不同 AutoEq 输出结构的图片寻址
+                img_file = temp_out / parent_dir_name / orig_name / f"{orig_name}.png"
+                if not img_file.exists():
+                    img_file = temp_out / parent_dir_name / f"{orig_name}.png"
+                if not img_file.exists():
+                    img_file = temp_out / orig_name / f"{orig_name}.png"
                 if not img_file.exists():
                     img_file = temp_out / f"{orig_name}.png"
                 
