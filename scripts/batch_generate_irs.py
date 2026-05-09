@@ -16,27 +16,37 @@ def parse_brand_model(name):
         return parts[0], ""
         
     brand_suffixes = ["audio", "acoustics", "acous", "ears", "ear", "hifi", "acousticwerkes", "design"]
+    connectors = ["&", "x", "for", "+"]
     brand_parts = [parts[0]]
     model_start_idx = 1
     
-    if len(parts) >= 3 and parts[1].lower() in ["&", "x", "for"]:
-        brand_parts.extend(parts[1:3])
-        model_start_idx = 3
-        
-    while model_start_idx < len(parts):
-        word = parts[model_start_idx]
+
+    brand_end_idx = 0
+    
+    i = 1
+    while i < len(parts):
+        word = parts[i]
         clean_word = re.sub(r'[\W_]+', '', word).lower()
-        if clean_word in brand_suffixes:
-            # 如果后面紧跟括号，则不视为品牌后缀，将其留给型号部分
-            if model_start_idx + 1 < len(parts) and parts[model_start_idx+1].startswith('('):
-                break
-            brand_parts.append(word)
-            model_start_idx += 1
-        else:
+        
+        if any(char.isdigit() for char in word):
             break
             
-    brand = " ".join(brand_parts)
-    model = " ".join(parts[model_start_idx:])
+        if clean_word in brand_suffixes:
+            if i + 1 < len(parts) and parts[i+1].startswith('('):
+                break
+            brand_end_idx = i
+            i += 1
+            continue
+            
+        if word.lower() in connectors and i + 1 < len(parts):
+            brand_end_idx = i + 1
+            i += 2
+            continue
+            
+        i += 1
+            
+    brand = " ".join(parts[:brand_end_idx + 1])
+    model = " ".join(parts[brand_end_idx + 1:])
     return brand, model
 
 def get_file_md5(file_path):
@@ -68,7 +78,6 @@ def update_readme_url():
         readme_path.write_text(new_content, encoding='utf-8')
 
 def main():
-    # 改为基于当前脚本所在位置寻找项目根目录，避免因为执行时的路径不同导致找错文件夹
     base_dir = Path(__file__).resolve().parent.parent
     measurements_dir = base_dir / "measurements"
     repo_files_dir = base_dir / "RepositoryFiles"
@@ -235,7 +244,6 @@ def main():
                 orig_name = current_scan[hp_id]["original_name"]
                 parent_dir_name = current_scan[hp_id]["csv_path"].parent.name
                 
-                # 兼容不同 AutoEq 输出结构的图片寻址
                 img_file = temp_out / parent_dir_name / orig_name / f"{orig_name}.png"
                 if not img_file.exists():
                     img_file = temp_out / parent_dir_name / f"{orig_name}.png"
