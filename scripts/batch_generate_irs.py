@@ -19,7 +19,7 @@ def parse_brand_model(name):
     brand_parts = [parts[0]]
     model_start_idx = 1
     
-    if len(parts) >= 3 and parts[1].lower() in ["&", "x"]:
+    if len(parts) >= 3 and parts[1].lower() in ["&", "x", "for"]:
         brand_parts.extend(parts[1:3])
         model_start_idx = 3
         
