@@ -15,7 +15,7 @@ def parse_brand_model(name):
     if len(parts) == 1:
         return parts[0], ""
         
-    brand_suffixes = ["audio", "acoustics", "ears", "ear", "hifi", "acousticwerkes", "design"]
+    brand_suffixes = ["audio", "acoustics", "acous", "ears", "ear", "hifi", "acousticwerkes", "design"]
     brand_parts = [parts[0]]
     model_start_idx = 1
     
@@ -27,6 +27,9 @@ def parse_brand_model(name):
         word = parts[model_start_idx]
         clean_word = re.sub(r'[\W_]+', '', word).lower()
         if clean_word in brand_suffixes:
+            # 如果后面紧跟括号，则不视为品牌后缀，将其留给型号部分
+            if model_start_idx + 1 < len(parts) and parts[model_start_idx+1].startswith('('):
+                break
             brand_parts.append(word)
             model_start_idx += 1
         else:
